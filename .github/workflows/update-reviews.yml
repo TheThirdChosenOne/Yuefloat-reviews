@@ -1,0 +1,39 @@
+# .github/workflows/update-reviews.yml
+name: Fetch Google Reviews Regularly
+
+on:
+  schedule:
+    # Runs every 6 hours (at minutes 0 past the hour, every 6th hour)
+    # You can adjust this. E.g., '0 0 * * *' for once a day at midnight UTC.
+    - cron: '0 */6 * * *'
+  workflow_dispatch: # Allows manual triggering from the Actions tab
+
+jobs:
+  fetch-and-commit-reviews:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4 # Use the latest major version
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4 # Use the latest major version
+        with:
+          node-version: '20' # Specify a current LTS Node.js version
+
+      - name: Fetch reviews
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+        run: node fetch-reviews.js
+
+      - name: Commit and push if changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add reviews.json
+          # Commit only if there are changes to reviews.json
+          if ! git diff --staged --quiet; then
+            git commit -m "Update Google reviews cache"
+            git push
+          else
+            echo "No changes to reviews.json to commit."
+          fi
