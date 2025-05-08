@@ -5,7 +5,7 @@ on:
   schedule:
     # Runs every 6 hours (at minutes 0 past the hour, every 6th hour)
     # You can adjust this. E.g., '0 0 * * *' for once a day at midnight UTC.
-    - cron: '0 */6 * * *'
+    - cron: '0 0 * * *'
   workflow_dispatch: # Allows manual triggering from the Actions tab
 
 jobs:
