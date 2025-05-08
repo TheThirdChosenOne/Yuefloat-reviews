@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const apiKey = process.env.GOOGLE_API_KEY;
 // *** IMPORTANT: Replace with YOUR business's Place ID ***
-const placeId = 'ChIJN5XX931fkFQRHZCRb7QhV_E'; // Yue Float's Place ID
+const placeId = 'ChIJAezuzocFdkgRgMEiXjxF2og'; // Yue Float's Place ID
 const outputFile = 'reviews.json'; // This file will be served by GitHub Pages
 const language = 'en'; // Optional: specify language for reviews
 
